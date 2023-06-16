@@ -20,7 +20,7 @@ import React from "react";
 import Logo from '../../../assets/logohorizontal.png';
 
 
-export function SigIn() {
+export function SignIn({ navigation }) {
     const { colorMode, toggleColorMode } = useColorMode();
 
     return (
@@ -64,7 +64,7 @@ export function SigIn() {
                         </FormControl.ErrorMessage>
                     </FormControl>
 
-                    <FormControl>
+                    <FormControl >
                         <FormControl.Label>Senha</FormControl.Label>
                         <Input
                             placeholder="senha"
@@ -84,28 +84,39 @@ export function SigIn() {
                             Mínimo de 8 caracteres.
                         </FormControl.HelperText>
                     </FormControl>
-                    <Button
-                        mt="7"
-                        colorScheme="cyan"
-                        variant={'solid'}
-                    >
-                        Entrar
-                    </Button>
+
+                        <Button
+
+                            mt="7"
+                            mb="2"
+                            colorScheme="cyan"
+                            variant={'solid'}
+                        >
+                            Entrar
+                        </Button>
+                        <Button
+                            onPress={() => navigation.push('Registro')}
+                            variant={'outline'}
+                        >
+                            Registrar
+                        </Button>
+
                 </VStack>
             </Box>
             <Checkbox value="agree">
                 Concordo com a política de segurança.
             </Checkbox>
             <HStack alignItems="center" space={4} mt={5}>
-            <Text fontSize="xl">Dark</Text>
+                <Text fontSize="xl">Dark</Text>
                 <Switch
                     isChecked={colorMode === "light"}
                     onToggle={toggleColorMode}
+                    size="lg"
                     aria-label={
                         colorMode === "light" ? "troque para o tema escuro" : "troque para o tema claro"
                     }
                 />
-            <Text fontSize="xl">Light</Text>
+                <Text fontSize="xl">Light</Text>
             </HStack>
         </Center>
     )
