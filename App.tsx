@@ -4,7 +4,7 @@ import { NativeBaseProvider, useColorMode } from "native-base";
 import { SignUp } from "./src/screens/SigUp";
 import { SignIn } from "./src/screens/SignIn";
 
-//CONSERTAR A COR DO HEADER
+//CONSERTAR A COR DO HEADERGIT
 export default function App() {
   const Stack = createNativeStackNavigator();
   const { colorMode, toggleColorMode } = useColorMode();
