@@ -4,22 +4,29 @@ import {
     Center,
     Checkbox,
     FormControl,
-    HStack,
     Image,
     Input,
     Stack,
-    Switch,
-    Text,
     VStack,
-    WarningOutlineIcon,
-    useColorMode
+    WarningOutlineIcon
 } from "native-base";
-import React from "react";
+import React, { useState } from "react";
 import Logo from '../../../assets/logohorizontal.png';
+import { ToggleTheme } from "../../components/ToggleTheme";
 
 export function SignUp() {
-    const { colorMode, toggleColorMode } = useColorMode();
-    
+
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+
+    const handleSubmit = () => {
+        console.log('Name:', name);
+        console.log('Email:', email);
+        console.log('Password:', password);
+      }; 
+
     return (
         <Center
             height="full"
@@ -30,67 +37,58 @@ export function SignUp() {
                 source={Logo}
                 resizeMode='contain'
                 alt='Image Logo'
+                top={4}
             />
             <Box w="full" p={5}>
                 <VStack>
-                    <FormControl isRequired>
-                        <Stack mx="4">
+                    <FormControl my={4} isRequired>
+                        <Stack mx="4" my="1">
                             <FormControl.Label>Nome Completo</FormControl.Label>
-                            <Input type="text" placeholder="Seu nome" />
+                            <Input type="text" placeholder="Seu nome" onChangeText={(text) => setName(text)} value={name}/>
                             <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
                                 Email inválido.
                             </FormControl.ErrorMessage>
                         </Stack>
-                        <Stack mx="4">
+                        <Stack mx="4" my="1">
                             <FormControl.Label>E-mail</FormControl.Label>
-                            <Input type="text" placeholder="seu@email.com" />
+                            <Input type="text" placeholder="seu@email.com" onChangeText={(text) => setEmail(text)} value={email}/>
                             <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
                                 Email inválido.
                             </FormControl.ErrorMessage>
                         </Stack>
-                        <Stack mx="4">
+                        <Stack mx="4" my="1">
                             <FormControl.Label>Senha</FormControl.Label>
-                            <Input type="password" placeholder="Senha" />
+                            <Input type="password" placeholder="Senha" onChangeText={(text) => setPassword(text)} value={password}/>
                             <FormControl.HelperText>
-                                Mínimo de 8 caracteres.
+                                Mínimo de 6 caracteres.
                             </FormControl.HelperText>
                             <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                                Atleast 6 characters ar\e required.
+                                São necessários pelo menos 6 caracteres.
                             </FormControl.ErrorMessage>
                         </Stack>
-                        <Stack mx="4">
+                        <Stack mx="4" my="1">
                             <FormControl.Label>Confirmar Senha</FormControl.Label>
-                            <Input type="password" placeholder="Confirmar Senha" />
+                            <Input type="password" placeholder="Confirmar Senha" onChangeText={(text) => setConfirmPassword(text)} value={confirmPassword}/>
                             <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                                Atleast 6 characters ar\e required.
+                                São necessários pelo menos 6 caracteres.
                             </FormControl.ErrorMessage>
                         </Stack>
+                        <Button
+                            mt="7"
+                            mb="2"
+                            colorScheme="cyan"
+                            variant={'solid'}
+                            onPress={handleSubmit}
+                        >
+                            Registrar
+                        </Button>
                     </FormControl>
-                    <Button
-                        mt="7"
-                        mb="2"
-                        colorScheme="cyan"
-                        variant={'solid'}
-                    >
-                        Registrar
-                    </Button>
                 </VStack>
             </Box>
             <Checkbox value="agree">
                 Concordo com a política de segurança.
             </Checkbox>
-            <HStack alignItems="center" space={4} mt={5}>
-                <Text fontSize="xl">Dark</Text>
-                <Switch
-                    isChecked={colorMode === "light"}
-                    onToggle={toggleColorMode}
-                    size="lg"
-                    aria-label={
-                        colorMode === "light" ? "troque para o tema escuro" : "troque para o tema claro"
-                    }
-                />
-                <Text fontSize="xl">Light</Text>
-            </HStack>
+            <ToggleTheme/>
         </Center>
     )
 }

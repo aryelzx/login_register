@@ -1,123 +1,108 @@
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from "@expo/vector-icons";
 import {
     Box,
     Button,
     Center,
     Checkbox,
     FormControl,
-    HStack,
     Heading,
     Icon,
     Image,
     Input,
-    Switch,
-    Text,
     VStack,
     WarningOutlineIcon,
-    useColorMode
 } from "native-base";
-import React from "react";
-import Logo from '../../../assets/logohorizontal.png';
-
+import React, { useState } from "react";
+import Logo from "../../../assets/logohorizontal.png";
+import { ToggleTheme } from "../../components/ToggleTheme";
 
 export function SignIn({ navigation }) {
-    const { colorMode, toggleColorMode } = useColorMode();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    return (
-        <Center
-            height="full"
-            _dark={{ bg: "black" }}
-            _light={{ bg: "white" }}
+  const handleSubmit = () => {
+    console.log("Email", email);
+    console.log("Senha", password);
+  };
+
+  return (
+    <Center height="full" _dark={{ bg: "black" }} _light={{ bg: "white" }}>
+      <Image source={Logo} resizeMode="contain" alt="Image Logo" mb={4} />
+      <Box width="full" p={5}>
+        <Heading
+          color="dark.200"
+          _dark={{ color: "white" }}
+          _light={{ color: "black" }}
         >
-            <Image
-                source={Logo}
-                resizeMode='contain'
-                alt='Image Logo'
-                mb={25}
-            />
-            <Box width="full" p={5}>
-                <Heading
-                    color='dark.200'
-                    _dark={{ color: "white" }}
-                    _light={{ color: "black" }}
-                >
-                    Entrar
-                </Heading>
-                <VStack>
-                    <FormControl> {/* tratar erro com isInvalid */}
-                        <FormControl.Label>E-mail</FormControl.Label>
-                        <Input
-                            placeholder="seu@email.com"
-                            InputLeftElement={
-                                <Icon
-                                    as={<MaterialIcons name="person" />}
-                                    size={5}
-                                    ml={2}
-                                    color="muted.400"
-                                />
-                            }
-                        />
-                        <FormControl.ErrorMessage
-                            leftIcon={<WarningOutlineIcon size="xs" />
-                            }>
-                            E-mail inválido.
-                        </FormControl.ErrorMessage>
-                    </FormControl>
-
-                    <FormControl >
-                        <FormControl.Label>Senha</FormControl.Label>
-                        <Input
-                            placeholder="senha"
-                            InputLeftElement={
-                                <Icon
-                                    as={<MaterialIcons name="lock" />}
-                                    size={5}
-                                    ml={2}
-                                    color="muted.400"
-                                />
-                            }
-                        />
-                        <FormControl.ErrorMessage>
-                            Senha inválida.
-                        </FormControl.ErrorMessage>
-                        <FormControl.HelperText>
-                            Mínimo de 8 caracteres.
-                        </FormControl.HelperText>
-                    </FormControl>
-
-                        <Button
-
-                            mt="7"
-                            mb="2"
-                            colorScheme="cyan"
-                            variant={'solid'}
-                        >
-                            Entrar
-                        </Button>
-                        <Button
-                            onPress={() => navigation.push('Registro')}
-                            variant={'outline'}
-                        >
-                            Registrar
-                        </Button>
-
-                </VStack>
-            </Box>
-            <Checkbox value="agree">
-                Concordo com a política de segurança.
-            </Checkbox>
-            <HStack alignItems="center" space={4} mt={5}>
-                <Text fontSize="xl">Dark</Text>
-                <Switch
-                    isChecked={colorMode === "light"}
-                    onToggle={toggleColorMode}
-                    size="lg"
-                    aria-label={
-                        colorMode === "light" ? "troque para o tema escuro" : "troque para o tema claro"
-                    }
+          Entrar
+        </Heading>
+        <VStack>
+          <FormControl>
+            {" "}
+            {/* tratar erro com isInvalid */}
+            <FormControl.Label>E-mail</FormControl.Label>
+            <Input
+              placeholder="seu@email.com"
+              InputLeftElement={
+                <Icon
+                  as={<MaterialIcons name="person" />}
+                  size={5}
+                  ml={2}
+                  color="muted.400"
                 />
-                <Text fontSize="xl">Light</Text>
-            </HStack>
-        </Center>
-    )
+              }
+              onChangeText={(text) => setEmail(text)}
+              value={email}
+            />
+            <FormControl.ErrorMessage
+              leftIcon={<WarningOutlineIcon size="xs" />}
+            >
+              E-mail inválido.
+            </FormControl.ErrorMessage>
+          </FormControl>
+
+          <FormControl>
+            <FormControl.Label>Senha</FormControl.Label>
+            <Input
+              type="password"
+              placeholder="senha"
+              InputLeftElement={
+                <Icon
+                  as={<MaterialIcons name="lock" />}
+                  size={5}
+                  ml={2}
+                  color="muted.400"
+                />
+              }
+              onChangeText={(text) => setPassword(text)}
+              value={password}
+            />
+            <FormControl.ErrorMessage>Senha inválida.</FormControl.ErrorMessage>
+            <FormControl.HelperText>
+              Mínimo de 8 caracteres.
+            </FormControl.HelperText>
+          </FormControl>
+          <Button
+            mt="7"
+            mb="2"
+            colorScheme="cyan"
+            variant={"solid"}
+            onPress={handleSubmit}
+          >
+            Entrar
+          </Button>
+          <Button
+            onPress={() => navigation.push("Registro")}
+            variant={"outline"}
+          >
+            Registrar
+          </Button>
+        </VStack>
+      </Box>
+      <Checkbox mb={-10} value="agree">
+        Concordo com a política de segurança.
+      </Checkbox>
+      <ToggleTheme />
+    </Center>
+  );
 }
